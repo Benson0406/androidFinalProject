@@ -14,7 +14,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 public class MainActivity extends Activity {
 
@@ -24,7 +27,9 @@ public class MainActivity extends Activity {
     private ImageButton pauseButton;
     private int number;
     private int time;
+    private int i;
     private TextView timerValue;
+    private ImageView imageview;
     private boolean isPause = false;
     Intent intent;
     long timeSwapBuff = 0L;
@@ -34,16 +39,39 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        imageview = (ImageView) findViewById(R.id.imageView2);
         timerValue = (TextView) findViewById(R.id.clock);
         intent = new Intent(MainActivity.this, poweropen.class);
         startService(intent);
         registerReceiver(broadcastReceiver, new IntentFilter(poweropen.BROADCAST_ACTION));
-
+        Button button = findViewById(R.id.button);
         pauseButton = (ImageButton) findViewById(R.id.pauseButton);
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         number = mPreferences.getInt("countnumber",0);
        // number = mPreferences.getInt("countnumber",0) + (int) SystemClock.uptimeMillis()/1000 - mPreferences.getInt("sym",0);
+    }
+    public void onClick(View view) {
+        if(i==0){
+            imageview.setBackground(ContextCompat.getDrawable(this,R.drawable.sky));
+            i+=1;
+        }
+        else if(i==1){
+            imageview.setBackground(ContextCompat.getDrawable(this,R.drawable.cute));
+            i+=1;
+        }
+        else if(i==2){
+            imageview.setBackground(ContextCompat.getDrawable(this,R.drawable.beach));
+            i+=1;
+        }
+        else if(i==3){
+            imageview.setBackground(ContextCompat.getDrawable(this,R.drawable.canahela));
+            i+=1;
+        }
+        else if(i==4){
+            imageview.setBackground(ContextCompat.getDrawable(this,R.drawable.duck));
+            i=0;
+        }
+
     }
     public void Pause(View view) {
         if(isPause){
